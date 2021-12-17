@@ -10,7 +10,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import com.mapbox.gpslatlong.service.AddressService;
 import java.util.List;
-import java.util.Optional;
 
 @RestController
 @RequestMapping(value = "/v1/program")
@@ -27,32 +26,33 @@ public class ProgramController {
 
 
     @GetMapping(value = "/init ")
-    public List<AddressDTO> readFile(){
+    public List<AddressDTO> readFile() {
         return service.readFile();
     }
 
     @GetMapping(value = "/{id}")
-    public AddressDTO findById(@PathVariable Long id){
+    public AddressDTO findById(@PathVariable Long id) {
         Address address = addressRepository.getById(id);
         return addressMapper.toDTO(address);
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<?> delete(@PathVariable Long id){
+    public ResponseEntity<?> delete(@PathVariable Long id) {
         addressRepository.deleteById(id);
         return ResponseEntity.status(HttpStatus.OK).build();
 
     }
 
     @PostMapping
-    public ResponseEntity<AddressDTO> create(@RequestBody AddressDTO addressDTO ) {
+    public ResponseEntity<AddressDTO> create(@RequestBody AddressDTO addressDTO) {
         return ResponseEntity.status(HttpStatus.CREATED)
-                .body(addressMapper.toDTO( addressRepository.save(addressMapper.toEntity(addressDTO))));
+                .body(addressMapper.toDTO(addressRepository.save(addressMapper.toEntity(addressDTO))));
     }
 
 
     @GetMapping(value = "/{street}")
-    public AddressDTO findby(@PathVariable String street) {
-        Address address = addressRepository.
+    public AddressDTO findbyStreet(@PathVariable String street) {
+        return addressMapper.toDTO(addressRepository.findBySreet(street));
     }
+    
 }
