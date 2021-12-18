@@ -4,6 +4,10 @@ import com.mapbox.gpslatlong.dto.AddressDTO;
 import com.mapbox.gpslatlong.entity.Address;
 import org.springframework.stereotype.Component;
 
+import java.util.AbstractList;
+import java.util.ArrayList;
+import java.util.List;
+
 @Component
 public class AddressMapper {
 
@@ -27,5 +31,16 @@ public class AddressMapper {
         addressDTO.setLatitude(address.getLatitude());
         addressDTO.setLongitude(address.getLongitude());
         return addressDTO;
+    }
+
+    public List<AddressDTO> toListDTO(List<Address> addressList){
+        if (addressList.isEmpty()) return null;
+        List<AddressDTO> addressDTOS = new ArrayList<>();
+
+        for (Address address : addressList){
+            addressDTOS.add(toDTO(address));
+        }
+
+        return addressDTOS;
     }
 }

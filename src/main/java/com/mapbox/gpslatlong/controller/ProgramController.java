@@ -49,10 +49,13 @@ public class ProgramController {
                 .body(addressMapper.toDTO(addressRepository.save(addressMapper.toEntity(addressDTO))));
     }
 
-
     @GetMapping(value = "/{street}")
     public AddressDTO findbyStreet(@PathVariable String street) {
         return addressMapper.toDTO(addressRepository.findBySreet(street));
     }
-    
+
+    @GetMapping(value = "/{address}")
+    public List<AddressDTO> findbyCity (@PathVariable String city) {
+        return addressMapper.toListDTO(addressRepository.findByCity(city));
+    }
 }
